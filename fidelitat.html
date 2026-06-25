@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Targeta de fidelitat d'Abbiocco Brunch. Acumula visites i guanya un brunch gratuït per a 2 persones cada 10 segells. Apunta't gratis!">
+  <title>Targeta de Fidelitat | Abbiocco Brunch · Lleida</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero { background: var(--green); padding: calc(var(--nav-h) + 64px) 0 80px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(61,122,88,0.4) 0%, transparent 70%); }
+    .page-hero-content { position: relative; z-index: 2; }
+    .page-hero h1 { color: var(--cream); margin: 12px 0 16px; }
+    .page-hero p { color: rgba(245,240,232,0.72); max-width: 500px; margin: 0 auto; }
+
+    .fidelitat-hero-card {
+      max-width: 360px; margin: 40px auto 0;
+      background: linear-gradient(135deg, #1C3D2E 0%, #2C5A40 60%, #3D7A58 100%);
+      border-radius: 20px; padding: 32px;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.35);
+      position: relative; overflow: hidden;
+    }
+    .fidelitat-hero-card::before { content: ''; position: absolute; width: 260px; height: 260px; border-radius: 50%; background: rgba(255,255,255,0.04); top: -80px; right: -60px; }
+
+    .how-it-works { background: var(--cream); }
+    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .step-card {
+      text-align: center; padding: 36px 28px;
+      background: var(--white); border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm); position: relative;
+    }
+    .step-card::after {
+      content: '→'; position: absolute; right: -20px; top: 50%;
+      transform: translateY(-50%); font-size: 24px; color: var(--border);
+    }
+    .step-card:last-child::after { display: none; }
+    .step-number {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--green); color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.4rem; font-weight: 700;
+      margin: 0 auto 20px;
+    }
+    .step-card h3 { margin-bottom: 10px; font-size: 1.1rem; }
+    .step-card p { font-size: 0.875rem; }
+
+    .rewards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+    .reward-card {
+      border: 1.5px solid var(--border); border-radius: var(--radius-lg);
+      padding: 28px 24px; text-align: center; transition: all var(--transition);
+    }
+    .reward-card:hover { border-color: var(--terra); box-shadow: var(--shadow-sm); }
+    .reward-icon { font-size: 36px; margin-bottom: 12px; }
+    .reward-card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .reward-card p { font-size: 0.83rem; }
+    .reward-badge {
+      display: inline-block; margin-top: 12px;
+      background: var(--cream); color: var(--terra);
+      font-size: 0.72rem; font-weight: 600; padding: 4px 12px; border-radius: 100px;
+    }
+
+    .signup-section { background: var(--green); }
+    .signup-form-card {
+      max-width: 560px; margin: 0 auto;
+      background: var(--white); border-radius: var(--radius-xl); padding: 48px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .faq { background: var(--cream); }
+    .faq-list { max-width: 720px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 0; cursor: pointer; font-weight: 500; font-size: 0.95rem;
+      gap: 16px; transition: color var(--transition);
+    }
+    .faq-q:hover { color: var(--terra); }
+    .faq-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; transition: transform var(--transition); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+    .faq-a-inner { padding: 0 0 20px; font-size: 0.875rem; color: var(--text-muted); line-height: 1.7; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-item.open .faq-a { max-height: 200px; }
+
+    @media(max-width:768px){
+      .steps-grid { grid-template-columns: 1fr; }
+      .step-card::after { display: none; }
+      .rewards-grid { grid-template-columns: 1fr; }
+      .signup-form-card { padding: 32px 24px; }
+    }
+  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">abBiocco<span>Brunch</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html#nosaltres">Nosaltres</a></li>
+        <li><a href="carta.html">Carta</a></li>
+        <li><a href="index.html#millors-plats">Plats</a></li>
+        <li><a href="index.html#ressenyes">Opinions</a></li>
+        <li><a href="fidelitat.html" class="active">Fidelitat</a></li>
+        <li><a href="index.html#contacte">Contacte</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="index.html#reserva" class="btn btn-primary">Reserva taula</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Menú"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="index.html#nosaltres">Nosaltres</a>
+    <a href="carta.html">Carta</a>
+    <a href="index.html#millors-plats">Plats estrella</a>
+    <a href="index.html#ressenyes">Opinions</a>
+    <a href="fidelitat.html">Targeta fidelitat</a>
+    <a href="index.html#contacte">Contacte</a>
+    <a href="index.html#reserva" class="btn btn-primary" style="margin-top:24px; justify-content:center;">Reserva taula</a>
+  </div>
+
+  <div class="page-hero">
+    <div class="page-hero-content container">
+      <span class="eyebrow" style="color:var(--terra-light)">Per als nostres fidels</span>
+      <h1>Targeta de Fidelitat</h1>
+      <p>Cada visita compta. Acumula segells i guanya un brunch complet per a 2 persones. Totalment gratuït, sense complicacions.</p>
+      <div class="fidelitat-hero-card">
+        <div class="loyalty-logo" style="font-family:var(--font-display);font-size:1rem;font-weight:700;color:white;margin-bottom:4px;">abBiocco<span style="font-style:italic;color:var(--terra-light)">Brunch</span></div>
+        <div style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:28px;">Targeta de Fidelitat</div>
+        <div class="loyalty-stamps" style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:24px;">
+          <div class="stamp filled" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:18px;">☕</div>
+          <div class="stamp filled" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:18px;">🥑</div>
+          <div class="stamp filled" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:18px;">🥞</div>
+          <div class="stamp" style="width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;"></div>
+          <div class="stamp reward" style="width:44px;height:44px;border-radius:50%;background:var(--terra);border:2px solid var(--terra-light);display:flex;align-items:center;justify-content:center;font-size:18px;">🎁</div>
+        </div>
+        <div style="font-size:0.72rem;color:rgba(255,255,255,0.45);margin-bottom:6px;">3 de 5 · Falten 2 per al teu regal</div>
+        <div style="height:3px;background:rgba(255,255,255,0.1);border-radius:100px;overflow:hidden;"><div style="width:60%;height:100%;background:var(--terra-light);border-radius:100px;"></div></div>
+        <div style="margin-top:20px;font-size:0.75rem;color:rgba(255,255,255,0.35);letter-spacing:0.04em;">EL TEU NOM · #00000</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <section class="section how-it-works">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="eyebrow">Senzill i gratuït</span>
+        <h2>Com funciona</h2>
+        <p>Tres passos i comences a acumular recompenses des de la teva primera visita.</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card" data-reveal>
+          <div class="step-number">1</div>
+          <h3>Apunta't aquí</h3>
+          <p>Omple el formulari de més avall amb el teu nom i correu. En 30 segons tens la teva targeta digital activada.</p>
+        </div>
+        <div class="step-card" data-reveal data-delay="1">
+          <div class="step-number">2</div>
+          <h3>Visita'ns i acumula</h3>
+          <p>Cada cop que facis una comanda de brunch o dinar complet, rebràs un segell a la teva targeta.</p>
+        </div>
+        <div class="step-card" data-reveal data-delay="2">
+          <div class="step-number">3</div>
+          <h3>Canjeja el premi</h3>
+          <p>Cada 10 segells, gaudeixes d'un brunch complet per a 2 persones totalment gratuït. 🎉</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rewards -->
+  <section class="section" id="recompenses">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="eyebrow">Les teves recompenses</span>
+        <h2>Què guanyes</h2>
+        <p>Com més ens visites, més et premiem. Beneficis exclusius per als membres del nostre programa.</p>
+      </div>
+      <div class="rewards-grid">
+        <div class="reward-card" data-reveal>
+          <div class="reward-icon">🥞</div>
+          <h3>Brunch per a 2</h3>
+          <p>El premi principal: un brunch complet per a 2 persones, gratuït, cada 10 segells.</p>
+          <span class="reward-badge">Cada 10 visites</span>
+        </div>
+        <div class="reward-card" data-reveal data-delay="1">
+          <div class="reward-icon">🎂</div>
+          <h3>Regal d'aniversari</h3>
+          <p>El mes del teu aniversari, un dolç casolà de regalo en la teva visita. Només cal que ens ho diguis!</p>
+          <span class="reward-badge">1 cop l'any</span>
+        </div>
+        <div class="reward-card" data-reveal data-delay="2">
+          <div class="reward-icon">⚡</div>
+          <h3>Ofertes exclusives</h3>
+          <p>Membres del programa de fidelitat accedeixen a ofertes i plats nous abans que ningú per email.</p>
+          <span class="reward-badge">Membres exclusius</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sign up -->
+  <section class="section signup-section" id="alta">
+    <div class="container">
+      <div class="section-header" data-reveal style="text-align:center;margin-bottom:48px;">
+        <span class="eyebrow" style="color:var(--terra-light)">Uneix-te gratis</span>
+        <h2 style="color:var(--cream)">Activa la teva targeta</h2>
+        <p style="color:rgba(245,240,232,0.72); max-width:440px; margin:0 auto;">30 segons i ets membre. Comencem a acumular des de la teva propera visita.</p>
+      </div>
+      <div class="signup-form-card" data-reveal>
+        <form id="loyalty-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="l-name">Nom</label>
+              <input type="text" id="l-name" placeholder="Anna" required>
+            </div>
+            <div class="form-group">
+              <label for="l-surname">Cognoms</label>
+              <input type="text" id="l-surname" placeholder="García" required>
+            </div>
+            <div class="form-group full">
+              <label for="l-email">Correu electrònic</label>
+              <input type="email" id="l-email" placeholder="anna@email.com" required>
+            </div>
+            <div class="form-group">
+              <label for="l-phone">Telèfon (opcional)</label>
+              <input type="tel" id="l-phone" placeholder="612 345 678">
+            </div>
+            <div class="form-group">
+              <label for="l-birth">Mes d'aniversari</label>
+              <select id="l-birth">
+                <option value="">-- (Per al regal!) --</option>
+                <option>Gener</option><option>Febrer</option><option>Març</option>
+                <option>Abril</option><option>Maig</option><option>Juny</option>
+                <option>Juliol</option><option>Agost</option><option>Setembre</option>
+                <option>Octubre</option><option>Novembre</option><option>Desembre</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-top:24px;">
+            <button type="submit" class="btn btn-terra" style="width:100%;justify-content:center;padding:15px;font-size:1rem;">
+              🌿 Activa la meva targeta gratis
+            </button>
+          </div>
+          <p class="form-note" style="margin-top:12px;">Les teves dades no es compartiran mai amb tercers. Consulta la nostra política de privacitat.</p>
+          <div class="form-success" id="loyalty-success" style="margin-top:12px;">
+            ✓ Benvingut/da a la família Abbiocco! Revisa el teu correu per activar la targeta. 🎉
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq">
+    <div class="container">
+      <div class="section-header" data-reveal>
+        <span class="eyebrow">Preguntes freqüents</span>
+        <h2>Tot el que necessites saber</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            La targeta té cost?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">No, la targeta de fidelitat és completament gratuïta. No cal cap subscripció ni pagament. Simplement et registres i comences a acumular segells en les teves visites.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Com s'acumulen els segells?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Reps un segell per cada comanda de brunch o dinar complet (plat principal + beguda). Les begudes soles o els dolços no computen com a visita completa. El personal t'indicarà en cada cas.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Els segells caduquen?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Els segells no caduquen. Pots acumular-los al teu ritme, sense pressa. L'únic que demanem és que siguis membre registrat al programa.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Puc canviar el premi per una altra cosa?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">El premi estàndard és un brunch per a 2 persones. Si tens preferències especials o al·lèrgies, parla amb nosaltres i intentarem adaptar el premi al màxim possible.</div></div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q" onclick="toggleFaq(this)">
+            Ja sóc client habitual. Puc recuperar visites anteriors?
+            <span class="faq-icon">+</span>
+          </div>
+          <div class="faq-a"><div class="faq-a-inner">Entenem que és una llàstima perdre visites anteriors! Per als clients habituals que es registren, donarem la benvinguda amb 2 segells extra de regal. Vine al local i digues-ho al personal.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:none;padding-top:0;justify-content:center;gap:24px;flex-wrap:wrap;">
+        <a href="index.html" class="footer-logo">abBiocco<span>Brunch</span></a>
+        <span style="color:rgba(255,255,255,0.2)">·</span>
+        <p style="font-size:0.83rem;">Av. Sant Ruf 47 · 25004 Lleida · <a href="tel:+34681349266" style="color:var(--terra-light)">681 349 266</a></p>
+        <div class="footer-gluten">100% Sense Gluten · Acreditat ACCA</div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/34681349266" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <script src="js/main.js"></script>
+  <script>
+    // FAQ toggle
+    function toggleFaq(el) {
+      const item = el.parentElement;
+      document.querySelectorAll('.faq-item.open').forEach(i => { if(i !== item) i.classList.remove('open'); });
+      item.classList.toggle('open');
+    }
+    // Loyalty form
+    document.getElementById('loyalty-form')?.addEventListener('submit', e => {
+      e.preventDefault();
+      document.getElementById('loyalty-success').style.display = 'block';
+      e.target.reset();
+      setTimeout(() => document.getElementById('loyalty-success').style.display = 'none', 6000);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="La carta d'Abbiocco Brunch Lleida. Brunch 100% sense gluten, pokés, pancakes, ous benedict, bowls d'açaí i molt més. Menú complet amb preus i al·lèrgens.">
+  <meta name="keywords" content="carta brunch sans gluten Lleida, menú celiac Lleida, brunch Lleida preus, ous benedict Lleida, acai bowl Lleida">
+  <title>La Carta | Abbiocco Brunch · Lleida</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .page-hero {
+      background: var(--green); padding: calc(var(--nav-h) + 64px) 0 80px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .page-hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(61,122,88,0.4) 0%, transparent 70%);
+    }
+    .page-hero-content { position: relative; z-index: 2; }
+    .page-hero h1 { color: var(--cream); margin: 12px 0 16px; }
+    .page-hero p { color: rgba(245,240,232,0.72); max-width: 500px; margin: 0 auto; }
+
+    .menu-nav {
+      position: sticky; top: var(--nav-h); z-index: 50;
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 0; overflow-x: auto;
+    }
+    .menu-nav-inner {
+      display: flex; gap: 0; min-width: max-content;
+    }
+    .menu-nav-btn {
+      padding: 16px 24px; font-size: 0.875rem; font-weight: 400;
+      color: var(--text-muted); border-bottom: 2px solid transparent;
+      transition: all var(--transition); white-space: nowrap; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .menu-nav-btn:hover, .menu-nav-btn.active {
+      color: var(--green); border-bottom-color: var(--terra);
+    }
+    .menu-nav-btn svg { flex-shrink: 0; }
+
+    .menu-section { padding: 64px 0 32px; }
+    .menu-section-header { margin-bottom: 40px; }
+    .menu-section-header h2 { margin: 8px 0 10px; font-size: 1.8rem; display: flex; align-items: center; gap: 10px; }
+    .menu-section-header p { max-width: 520px; }
+
+    .menu-items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; }
+    .menu-item { background: var(--white); padding: 22px 24px; display: flex; gap: 16px; align-items: flex-start; transition: background var(--transition); }
+    .menu-item:hover { background: var(--cream); }
+    .menu-item-img { width: 72px; height: 72px; border-radius: var(--radius-sm); overflow: hidden; background: var(--cream-dark); flex-shrink: 0; }
+    .menu-item-img img { width: 100%; height: 100%; object-fit: cover; }
+    .menu-item-info { flex: 1; min-width: 0; }
+    .menu-item-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 4px; }
+    .menu-item-name { font-family: var(--font-display); font-size: 1rem; font-weight: 600; }
+    .menu-item-price { font-family: var(--font-display); font-size: 1rem; font-weight: 600; color: var(--green); white-space: nowrap; flex-shrink: 0; }
+    .menu-item-desc { font-size: 0.83rem; color: var(--text-muted); line-height: 1.55; margin-bottom: 8px; }
+    .menu-item-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .menu-tag { font-size: 0.65rem; font-weight: 500; padding: 2px 8px; border-radius: 100px; display: inline-flex; align-items: center; gap: 3px; }
+    .menu-tag-green { background: #E8F5E9; color: #2C6E2E; }
+    .menu-tag-amber { background: #FFF3E0; color: #E65100; }
+    .menu-tag-blue  { background: #E3F2FD; color: #1565C0; }
+
+    .menu-divider { padding: 16px 0 0; border-top: 1px solid var(--border); margin-top: 16px; text-align: center; }
+    .menu-allergens-note {
+      background: var(--cream); border-radius: var(--radius-lg); padding: 24px 28px; margin-top: 48px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .menu-allergens-note svg { width: 24px; height: 24px; color: var(--terra); flex-shrink: 0; margin-top: 2px; }
+    .menu-allergens-note p { font-size: 0.875rem; }
+
+    /* WhatsApp floating button */
+    .whatsapp-float {
+      position: fixed; bottom: 24px; right: 24px;
+      width: 52px; height: 52px;
+      background: #25D366; color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 200;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-float:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(0,0,0,0.22); }
+    .whatsapp-float svg { width: 26px; height: 26px; }
+
+    @media(max-width:768px){
+      .menu-items { grid-template-columns: 1fr; }
+    }
+  </style>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='%233d7a58' d='M50 10c-3 8-12 14-20 18 2 10 8 22 20 28 12-6 18-18 20-28-8-4-17-10-20-18z'/></svg>">
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-logo">
+        <img src="public/abblogosmall.png" alt="Abbiocco Brunch">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html#nosaltres">Nosaltres</a></li>
+        <li><a href="carta.html" class="active">Carta</a></li>
+        <li><a href="index.html#millors-plats">Plats</a></li>
+        <li><a href="index.html#ressenyes">Opinions</a></li>
+        <li><a href="fidelitat.html">Fidelitat</a></li>
+        <li><a href="index.html#contacte">Contacte</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="index.html#reserva" class="btn btn-primary">Reserva taula</a>
+      </div>
+      <button class="nav-hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="mobile-menu">
+    <a href="index.html#nosaltres">Nosaltres</a>
+    <a href="carta.html">Carta</a>
+    <a href="index.html#millors-plats">Plats estrella</a>
+    <a href="index.html#ressenyes">Opinions</a>
+    <a href="fidelitat.html">Targeta fidelitat</a>
+    <a href="index.html#contacte">Contacte</a>
+    <a href="index.html#reserva" class="btn btn-primary" style="margin-top:24px; justify-content:center;">Reserva taula</a>
+  </div>
+
+  <div class="page-hero">
+    <div class="page-hero-content container">
+      <span class="eyebrow" style="color:var(--terra-light)">El nostre menú</span>
+      <h1>La Carta</h1>
+      <p>Tot 100% sense gluten i sense sucres refinats. Ingredients frescos, receptes casolanes i molt de cor.</p>
+    </div>
+  </div>
+
+  <!-- Sticky menu nav -->
+  <div class="menu-nav">
+    <div class="container">
+      <div class="menu-nav-inner">
+        <button class="menu-nav-btn active" onclick="scrollToSection('esmorzars')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          Esmorzars
+        </button>
+        <button class="menu-nav-btn" onclick="scrollToSection('brunch')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v5a4 4 0 0 0 4 4h0v11"/><path d="M21 15V2a5 5 0 0 0-5 5v4h5"/><line x1="21" y1="15" x2="21" y2="22"/></svg>
+          Brunch
+        </button>
+        <button class="menu-nav-btn" onclick="scrollToSection('dinar')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 16c2-3.3 4-3.3 6 0s4 3.3 6 0 4-3.3 6 0"/><path d="M2 10c2-3.3 4-3.3 6 0s4 3.3 6 0 4-3.3 6 0"/></svg>
+          Dinar
+        </button>
+        <button class="menu-nav-btn" onclick="scrollToSection('dolcos')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Dolços
+        </button>
+        <button class="menu-nav-btn" onclick="scrollToSection('begudes')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          Begudes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+
+    <!-- Esmorzars -->
+    <section class="menu-section" id="esmorzars">
+      <div class="container">
+        <div class="menu-section-header" data-reveal>
+          <span class="eyebrow">Bon dia!</span>
+          <h2>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            Esmorzars
+          </h2>
+          <p>Comença el dia amb energia. Disponible de dimarts a diumenge des de les 9:00h.</p>
+        </div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200&q=80" alt="Tosta d'alvocat" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Tosta d'alvocat i ou</span><span class="menu-item-price">10,50€</span></div>
+              <p class="menu-item-desc">Pa artesà SG torrat, alvocat fresc, ou poché, tomàquet cherry i romesco casolà</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegetarià</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=200&q=80" alt="French Toast" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">French Toast</span><span class="menu-item-price">9,50€</span></div>
+              <p class="menu-item-desc">Pa brioche SG, ou i canyella, amb fruita fresca de temporada i mel d'abella</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegetarià</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1494597564530-871f2b93ac55?w=200&q=80" alt="Granola bowl" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Granola Bowl</span><span class="menu-item-price">8,50€</span></div>
+              <p class="menu-item-desc">Granola artesana SG, iogurt de coco, fruita fresca i llavor de xia. Cruixent i nutritiu.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegà</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1600336153113-d66c79de3e91?w=200&q=80" alt="Ou remenat" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Ous remats amb verdures</span><span class="menu-item-price">9,00€</span></div>
+              <p class="menu-item-desc">Ous de granja remenats amb espinacs, tofu fumat, pebre vermell i pa SG torrat</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegetarià</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brunch -->
+    <section class="menu-section" id="brunch" style="background:var(--cream)">
+      <div class="container">
+        <div class="menu-section-header" data-reveal>
+          <span class="eyebrow">El plat estrella</span>
+          <h2>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 2v5a4 4 0 0 0 4 4h0v11"/><path d="M21 15V2a5 5 0 0 0-5 5v4h5"/><line x1="21" y1="15" x2="21" y2="22"/></svg>
+            Brunch
+          </h2>
+          <p>Els preferits de les caps de setmana. Plats per gaudir sense pressa ni culpes.</p>
+        </div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=200&q=80" alt="Ous Benedict" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Ous Benedict</span><span class="menu-item-price">13,50€</span></div>
+              <p class="menu-item-desc">Pa SG torrat, pernil ibèric o salmó marinat casolà, ou poché i salsa holandesa lleugera</p>
+              <div class="menu-item-tags">
+                <span class="menu-tag menu-tag-green">Sense gluten</span>
+                <span class="menu-tag menu-tag-amber">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                  Best seller
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=200&q=80" alt="Pancakes" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Pancakes</span><span class="menu-item-price">9,50€</span></div>
+              <p class="menu-item-desc">De farina de civada SG, amb Nociocco casolana o crema de cacauet artesana i fruits vermells</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegetarià</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1590301157890-4810ed352733?w=200&q=80" alt="Açaí Bowl" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Açaí Bowl</span><span class="menu-item-price">11,00€</span></div>
+              <p class="menu-item-desc">Açaí, granola artesana SG, coco ratllat, fruita fresca de temporada i mel de flors</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegà</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1565299543923-37dd37887442?w=200&q=80" alt="Full Brunch" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Full Abbiocco Brunch</span><span class="menu-item-price">17,50€</span></div>
+              <p class="menu-item-desc">Ou poché, salmó marinat, alvocat, verdures saltades, pa SG i una beguda calenta. El plat complet.</p>
+              <div class="menu-item-tags">
+                <span class="menu-tag menu-tag-green">Sense gluten</span>
+                <span class="menu-tag menu-tag-amber">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9z"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="6" y1="3" x2="12" y2="9"/><line x1="18" y1="3" x2="12" y2="9"/></svg>
+                  Recomanat
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dinar -->
+    <section class="menu-section" id="dinar">
+      <div class="container">
+        <div class="menu-section-header" data-reveal>
+          <span class="eyebrow">A migdia</span>
+          <h2>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 16c2-3.3 4-3.3 6 0s4 3.3 6 0 4-3.3 6 0"/><path d="M2 10c2-3.3 4-3.3 6 0s4 3.3 6 0 4-3.3 6 0"/></svg>
+            Dinar
+          </h2>
+          <p>Disponible fins les 16:30h de dimarts a divendres. Fresc, nutritiu i equilibrat.</p>
+        </div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=200&q=80" alt="Poké bowl" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Poké de Salmó</span><span class="menu-item-price">14,50€</span></div>
+              <p class="menu-item-desc">Arròs integral, salmó marinat, alvocat, edamame, pepino, ceba tendre i salsa teriyaki SG</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-amber">Peix</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&q=80" alt="Buddha Bowl" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Buddha Bowl Vegà</span><span class="menu-item-price">13,00€</span></div>
+              <p class="menu-item-desc">Quinoa, cigrons rosats, remolatxa, pastanaga, hummus casolà, llavor de gira-sol i tahini</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegà</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&q=80" alt="Poké pollastre" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Poké de Pollastre</span><span class="menu-item-price">13,50€</span></div>
+              <p class="menu-item-desc">Quinoa, pollastre a la planxa, mango, col llombarda, anacards i salsa de cacauet casolana</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-amber">Fruits secs</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=200&q=80" alt="Sopa" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Sopa del dia</span><span class="menu-item-price">8,50€</span></div>
+              <p class="menu-item-desc">Elaborada diàriament amb verdures de temporada locals. Pregunta al personal per l'opció d'avui.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegà</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dolços -->
+    <section class="menu-section" id="dolcos" style="background:var(--cream)">
+      <div class="container">
+        <div class="menu-section-header" data-reveal>
+          <span class="eyebrow">Per acabar amb dolçor</span>
+          <h2>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Dolços &amp; Pastisseria
+          </h2>
+          <p>Tots elaborats al nostre obrador amb farina d'ametlla, dàtils, plàtan i fruita natural. Sense sucres refinats.</p>
+        </div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=200&q=80" alt="Donuts" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Donuts Abbiocco</span><span class="menu-item-price">4,50€</span></div>
+              <p class="menu-item-desc">Farina d'ametlla, plàtan, ous i suc de taronja. Cobertura de xocolata negra 85% o vainilla</p>
+              <div class="menu-item-tags">
+                <span class="menu-tag menu-tag-green">Sense gluten</span>
+                <span class="menu-tag menu-tag-amber">
+                  <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12l4 6-10 13L2 9z"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="12" y1="22" x2="12" y2="9"/><line x1="6" y1="3" x2="12" y2="9"/><line x1="18" y1="3" x2="12" y2="9"/></svg>
+                  Exclusiu
+                </span>
+              </div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1464305795204-6f5bbfc7fb81?w=200&q=80" alt="Brownie" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Brownie de xocolata</span><span class="menu-item-price">4,00€</span></div>
+              <p class="menu-item-desc">Farina de coco, xocolata negra 85%, ous i dàtils medjool. Fondant per dins, cruixent per fora.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegetarià</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1576618148400-f54bed99fcfd?w=200&q=80" alt="Muffins" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Muffin de mirtils</span><span class="menu-item-price">3,50€</span></div>
+              <p class="menu-item-desc">Farina d'ametlla, mirtils frescos, llimona i vainilla. Esponjós i natural, sense sucres afegits.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-amber">Fruits secs</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=200&q=80" alt="Cheesecake" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Cheesecake de maduixa</span><span class="menu-item-price">5,50€</span></div>
+              <p class="menu-item-desc">Base d'ametlla, crema de formatge de cabra, coulis de maduixa natural. Sense forn, sense sucre.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-amber">Fruits secs</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Begudes -->
+    <section class="menu-section" id="begudes">
+      <div class="container">
+        <div class="menu-section-header" data-reveal>
+          <span class="eyebrow">Per regar-ho tot</span>
+          <h2>
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+            Cafè &amp; Begudes
+          </h2>
+          <p>Specialty coffee de granges seleccionades, infusions naturals i batuts nutritius.</p>
+        </div>
+        <div class="menu-items">
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=200&q=80" alt="Cafè" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Cafè d'especialitat</span><span class="menu-item-price">2,50€</span></div>
+              <p class="menu-item-desc">Espresso, americà, tallat. Grans d'origen seleccionats, torrat artesà. Opció de llet vegetal.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegà op.</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=200&q=80" alt="Latte" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Latte / Capuccino</span><span class="menu-item-price">3,50€</span></div>
+              <p class="menu-item-desc">Espresso double amb llet sencera o vegetal (civada, ametlla, soja, coco). Latte art inclòs.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegà op.</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1544145945-f90425340c7e?w=200&q=80" alt="Matcha" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Matcha Latte</span><span class="menu-item-price">4,00€</span></div>
+              <p class="menu-item-desc">Matcha cerimònia japonès grau A, llet d'avena escumada. Endolcit amb mel o xarop d'agave.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegà op.</span></div>
+            </div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-img"><img src="https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=200&q=80" alt="Smoothie" loading="lazy"></div>
+            <div class="menu-item-info">
+              <div class="menu-item-top"><span class="menu-item-name">Smoothie del dia</span><span class="menu-item-price">5,00€</span></div>
+              <p class="menu-item-desc">Elaborat diàriament amb fruita fresca de temporada, llet vegetal i superaliments. Sense sucre afegit.</p>
+              <div class="menu-item-tags"><span class="menu-tag menu-tag-green">Sense gluten</span><span class="menu-tag menu-tag-blue">Vegà</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="menu-allergens-note" data-reveal>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4m0 4h.01"/></svg>
+          <p><strong>Al·lèrgens i intoleràncies:</strong> Tota la nostra cuina és 100% sense gluten i acreditada per l'Associació de Celíacs de Catalunya (ACCA). Si tens altres intoleràncies o al·lèrgies, comunica-ho al nostre personal i t'assessorarem sense cap problema. Treballem amb màxima cura per evitar contaminacions creuades.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="background:var(--green); padding:64px 0; text-align:center;">
+      <div class="container">
+        <span class="eyebrow" style="color:var(--terra-light)">T'ha agradat el que has vist?</span>
+        <h2 style="color:var(--cream); margin:12px 0 16px;">Reserva la teva taula ara</h2>
+        <p style="color:rgba(245,240,232,0.72); max-width:440px; margin:0 auto 32px;">No t'ho pensis més. Vine a tastar-ho en persona i entendràs per què som el spot preferit de Lleida.</p>
+        <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap;">
+          <a href="index.html#reserva" class="btn btn-terra">Reserva taula ara</a>
+          <a href="https://wa.me/34681349266" class="btn" style="border:1.5px solid rgba(255,255,255,0.35); color:var(--cream);" target="_blank">WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:none; padding-top:0; justify-content:center; gap:24px; flex-wrap:wrap;">
+        <a href="index.html" class="footer-logo">abBiocco<span>Brunch</span></a>
+        <span style="color:rgba(255,255,255,0.2)">·</span>
+        <p style="font-size:0.83rem;">Av. Sant Ruf 47 · 25004 Lleida · <a href="tel:+34681349266" style="color:var(--terra-light)">681 349 266</a></p>
+        <div class="footer-gluten">100% Sense Gluten · Acreditat ACCA</div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/34681349266" class="whatsapp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <script src="js/main.js"></script>
+  <script>
+    function scrollToSection(id) {
+      document.querySelectorAll('.menu-nav-btn').forEach(b => b.classList.remove('active'));
+      event.target.closest('.menu-nav-btn').classList.add('active');
+      const el = document.getElementById(id);
+      if (el) window.scrollTo({ top: el.offsetTop - 130, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
